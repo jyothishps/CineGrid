@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchMovieDetails, fetchMovieCredits, getImageURL, checkWatchlistStatus, addToWatchlist, removeFromWatchlist } from "../services/api";
+import { fetchMovieDetails, fetchMovieCredits, fetchMovieVideos, getImageURL, checkWatchlistStatus, addToWatchlist, removeFromWatchlist } from "../services/api";
 
 function MovieDetails({ movieId, onClose }) {
   const [movie, setMovie] = useState(null);
@@ -8,6 +8,8 @@ function MovieDetails({ movieId, onClose }) {
   const [error, setIsError] = useState(null);
   const [inWatchlist, setInWatchlist] = useState(false);
   const [watchlistLoading, setWatchlistLoading] = useState(false);
+  const [trailerKey, setTrailerKey] = useState(null);
+  const [showTrailer, setShowTrailer] = useState(false);
 
   useEffect(() => {
     async function getMoviesDetails() {
@@ -16,15 +18,22 @@ function MovieDetails({ movieId, onClose }) {
       try {
         setIsLoading(true);
         setIsError(null);
-        const [movieData, castData] = await Promise.all([
+        const [movieData, castData, videosData] = await Promise.all([
           fetchMovieDetails(movieId),
-          fetchMovieCredits(movieId)
+          fetchMovieCredits(movieId),
+          fetchMovieVideos(movieId)
         ]);
         if (!movieData || !movieData.title) {
           throw new Error("Invalid movie data");
         }
         setMovie(movieData);
         setCast(castData.slice(0, 15)); // Get top 15 cast members
+
+        // Find YouTube Trailer
+        const trailer = videosData.find(
+          (vid) => vid.site === "YouTube" && vid.type === "Trailer"
+        );
+        setTrailerKey(trailer ? trailer.key : null);
 
         try {
           const status = await checkWatchlistStatus(movieId);
@@ -229,9 +238,13 @@ function MovieDetails({ movieId, onClose }) {
 
                   {/* Buttons */}
                   <div className="flex flex-col sm:flex-row gap-4 mb-10">
-                    <button className="flex-1 sm:flex-none bg-purple-600 hover:bg-purple-500 text-white px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-3 transition-all shadow-lg shadow-purple-900/40 hover:shadow-purple-700/60 transform hover:-translate-y-1">
+                    <button 
+                      onClick={() => setShowTrailer(true)}
+                      disabled={!trailerKey}
+                      className={`flex-1 sm:flex-none px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-3 transition-all shadow-lg transform hover:-translate-y-1 ${trailerKey ? "bg-purple-600 hover:bg-purple-500 text-white shadow-purple-900/40 hover:shadow-purple-700/60" : "bg-neutral-600 text-neutral-400 cursor-not-allowed"}`}
+                    >
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" /></svg>
-                      Play Trailer
+                      {trailerKey ? "Play Trailer" : "No Trailer"}
                     </button>
                     <button
                       onClick={handleWatchlistToggle}
@@ -329,6 +342,36 @@ function MovieDetails({ movieId, onClose }) {
           </div>
         )}
       </div>
+
+      {/* Trailer Modal */}
+      {showTrailer && trailerKey && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4"
+          onClick={() => setShowTrailer(false)}
+        >
+          <div
+            className="relative w-full max-w-5xl aspect-video bg-black rounded-lg overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowTrailer(false)}
+              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-neutral-800/80 text-white hover:bg-neutral-700/80 transition-all"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <iframe
+              className="w-full h-full"
+              src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
