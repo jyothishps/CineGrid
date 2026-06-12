@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000/api';
+
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
@@ -25,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const res = await axios.post('https://cinegrid-backend-oim0.onrender.com/api/auth/login', { email, password });
+            const res = await axios.post(`${BACKEND_URL}/auth/login`, { email, password });
             const { token, user } = res.data;
 
             localStorage.setItem('token', token);
@@ -40,7 +42,7 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (username, email, password) => {
         try {
-            const res = await axios.post('https://cinegrid-backend-oim0.onrender.com/api/auth/register', { username, email, password });
+            const res = await axios.post(`${BACKEND_URL}/auth/register`, { username, email, password });
             // You might want to auto-login or redirect to login
             return { success: true };
         } catch (error) {

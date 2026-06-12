@@ -78,7 +78,7 @@ function NavBar() {
 
   return (
     <header
-      className={`fixed w-full z-50 transition-all duration-300 ${isScrolled
+      className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || isMobileMenuOpen
         ? "bg-neutral-900/95 backdrop-blur-md shadow-lg"
         : "bg-transparent"
         }`}
@@ -87,7 +87,7 @@ function NavBar() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/home" className="flex items-center">
-            <span className="text-purple-500 font-bold text-3xl">
+            <span className="text-purple-500 font-bold text-2xl sm:text-3xl">
               Cine<span className="text-white">Grid</span>
             </span>
           </Link>
@@ -147,9 +147,9 @@ function NavBar() {
               onChange={(e) => setSearchQry(e.target.value)}
               onFocus={handleSearchFocus}
               type="text"
-              placeholder="Search Movies....."
-              className="bg-neutral-800/80 text-white px-4 py-2 rounded-full text-sm
-              w-32 sm:w-48 focus:w-48 sm:focus:w-64 transition-all duration-300 focus:outline-none focus:ring-2
+              placeholder="Search..."
+              className="bg-neutral-800/80 text-white px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm
+              w-24 sm:w-48 focus:w-32 sm:focus:w-64 transition-all duration-300 focus:outline-none focus:ring-2
               focus:ring-purple-500/50"
             />
 

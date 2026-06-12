@@ -47,7 +47,7 @@ function MovieSlider({ title, movies, subtitle = "", id }) {
             {/* Conditional Rendering */}
             <p className="text-neutral-400 text-sm mt-1">{subtitle}</p>
           </div>
-          <div className="flex space-x-2">
+          <div className="hidden md:flex space-x-2">
             <button onClick={() => scroll("left")}
               className="p-2 rounded-full bg-neutral-800/70 hover:bg-neutral-700
                 text-white transition-all"
@@ -93,13 +93,13 @@ function MovieSlider({ title, movies, subtitle = "", id }) {
 
         {/* Movie Slider */}
         <div className="relative">
-          <div className="flex space-x-4 overflow-x-hidden scrollbar-hide pb-4 snap-x" ref={sliderRef}
+          <div className="flex space-x-4 overflow-x-auto scrollbar-hide pb-4 snap-x" ref={sliderRef}
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
             {/* Conditional Rendering */}
             {movies.map((movie) => {
               return (
                 <div key={movie.id}
-                  className="min-w-[240px] snap-start relative group
+                  className="min-w-[150px] sm:min-w-[200px] md:min-w-[240px] snap-start relative group
                 cursor-pointer"
 
                   onClick={() => handleMovieClick(movie.id)}

@@ -101,17 +101,17 @@ function MovieDetails({ movieId, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-900/95 backdrop-blur-sm overflow-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 bg-neutral-900/95 backdrop-blur-sm overflow-auto"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-5xl bg-neutral-800 rounded-lg shadow-xl max-h-[90vh] overflow-hidden overflow-y-auto"
+        className="relative w-full h-full sm:h-auto sm:max-h-[90vh] sm:max-w-5xl bg-neutral-800 rounded-none sm:rounded-lg shadow-xl overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-neutral-700/80 text-white hover:bg-neutral-600/80 transition-all"
+          className="fixed top-4 right-4 z-50 sm:absolute sm:top-4 sm:right-4 sm:z-10 p-2 rounded-full bg-neutral-700/80 text-white hover:bg-neutral-600/80 transition-all"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -170,7 +170,7 @@ function MovieDetails({ movieId, onClose }) {
         ) : (
           <div>
             {/* Backdrop Header */}
-            <div className="relative h-72 md:h-96 w-full">
+            <div className="relative h-48 sm:h-72 md:h-96 w-full">
               <img
                 src={getImageURL(movie.backdrop_path)}
                 alt={movie.title}
@@ -181,7 +181,7 @@ function MovieDetails({ movieId, onClose }) {
             </div>
 
             <div className="relative px-4 sm:px-6 md:px-12 pb-12">
-              <div className="flex flex-col md:flex-row gap-6 md:gap-8 -mt-28 md:-mt-48">
+              <div className="flex flex-col md:flex-row gap-6 md:gap-8 -mt-20 sm:-mt-28 md:-mt-48">
                 {/* Floating Poster */}
                 <div className="flex-shrink-0 z-10 mx-auto md:mx-0">
                   <div className="w-48 md:w-72 rounded-xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10 transform transition-transform duration-300 hover:scale-[1.02] aspect-[2/3] bg-neutral-800">
@@ -346,11 +346,11 @@ function MovieDetails({ movieId, onClose }) {
       {/* Trailer Modal */}
       {showTrailer && trailerKey && (
         <div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4"
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-0 sm:p-4"
           onClick={() => setShowTrailer(false)}
         >
           <div
-            className="relative w-full max-w-5xl aspect-video bg-black rounded-lg overflow-hidden shadow-2xl"
+            className="relative w-full max-w-5xl aspect-video bg-black rounded-none sm:rounded-lg overflow-hidden shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <button

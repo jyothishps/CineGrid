@@ -2,7 +2,7 @@ const API_KEY = "c35323a6faf095bb12979fa6cf00e085";
 const BASE_URL = "https://api.themoviedb.org/3";
 import axios from 'axios';
 
-const BACKEND_URL = 'http://localhost:5000/api';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000/api';
 
 const getAuthHeaders = () => {
     const token = localStorage.getItem('token');

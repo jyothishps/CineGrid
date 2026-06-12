@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 // Configure dotenv to read from root .env if it exists, or one in server
 dotenv.config();
 
-const pool = mysql.createPool({
+const connectionConfig = process.env.DATABASE_URL || {
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
@@ -14,6 +14,8 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
-});
+};
+
+const pool = mysql.createPool(connectionConfig);
 
 export default pool;
