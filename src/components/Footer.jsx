@@ -48,34 +48,6 @@ function Footer() {
                     </li>
                 </ul>
             </div>
-
-            <div>
-                <h3 className='text-white font-semibold text-lg mb-4'>Resources</h3>
-                <ul className='space-y-2 text-sm'>
-                    <li><a href="#" className='hover:text-purple-400'>About</a></li>
-                    <li><a href="#" className='hover:text-purple-400'>Contact</a></li>
-                    <li><a href="#" className='hover:text-purple-400'>Blog</a></li>
-                    <li><a href="#" className='hover:text-purple-400'>FAQ</a></li>
-                    <li><a href="#" className='hover:text-purple-400'>Help Center</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h3 className='text-white font-semibold text-lg mb-4'>Newsletter</h3>
-                <p className='text-sm mb-4'>Stay up to date with latest movies and news</p>
-                <form className='space-y-3'>
-                    <div className='relative'>
-                        <input type="email" placeholder='Your email address'
-                        className='w-full bg-neutral-800 border-neutral-700 text-white
-                        px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50
-                        text-sm'/>
-                    </div>
-                    <button className='w-full bg-purple-600 hover:bg-purple-700 text-white
-                    py-2 rounded-lg transition-all text-sm'>
-                        Subscribe
-                    </button>
-                </form>
-            </div>
         </div>
     </div>
   </footer>
