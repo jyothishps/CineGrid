@@ -10,7 +10,8 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-# Environment variables
+
+# Environment variables - NEVER commit these
 .env
 .env.local
 .env.*.local
@@ -26,3 +27,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Verification/debug scripts
+verify_api.js
+verify_backend.js
+verify_backend.cjs
+verify_watchlist.js
+
+# Unused default Vite template assets
+public/vite.svg
+src/assets/react.svg
