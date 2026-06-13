@@ -18,8 +18,15 @@ function Login() {
     const [error, setError] = useState('');
     const [visible, setVisible] = useState(false);
 
-    const { login } = useAuth();
+    const { login, user } = useAuth();
     const navigate = useNavigate();
+
+    // Redirect to home if already logged in
+    useEffect(() => {
+        if (user) {
+            navigate('/home');
+        }
+    }, [user, navigate]);
 
     useEffect(() => {
         setVisible(true);
